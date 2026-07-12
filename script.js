@@ -3,7 +3,7 @@
 // ========================================
 
 // 14 July 2026 12:00 AM
-const targetDate = new Date("July 11, 2026 00:00:00").getTime();
+const targetDate = new Date("July 14, 2026 00:00:00").getTime();
 
 const days = document.getElementById("days");
 const hours = document.getElementById("hours");
