@@ -326,25 +326,25 @@ transform:translateY(0);
     }
 
     .video-thumbnail {
-    position: absolute;
-    inset: 0;
+        position: absolute;
+        inset: 0;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    gap: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 8px;
 
-    background:
-        radial-gradient(
-            circle at 25% 20%,
-            rgba(255, 70, 135, 0.42),
-            transparent 42%
-        ),
-        linear-gradient(145deg, #43233f, #171827);
-}
+        background:
+            radial-gradient(
+                circle at 25% 20%,
+                rgba(255, 70, 135, 0.42),
+                transparent 42%
+            ),
+            linear-gradient(145deg, #43233f, #171827);
+    }
 
-.video-decoration {
+    .video-decoration {
     position: absolute;
     top: 8px;
     left: 9px;

@@ -207,11 +207,17 @@ Will you be my wife, Niharika? 💍
 <div class="buttons">
 
 
-<button class="yes" onclick="yesClicked()">
-
-YES ❤️
-
+<button
+    type="button"
+    id="yesBtn">
+    Yes ❤️
 </button>
+
+<script>
+document.getElementById("yesBtn").addEventListener("click", function () {
+    window.location.href = "timeline.html";
+});
+</script>
 
 
 <button class="no" id="noBtn">
