@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Our Story Timeline ❤️</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        body {
+            min-height: 100vh;
+            overflow-y: auto;
+            background:
+                radial-gradient(circle at top, rgba(255, 121, 168, 0.25), transparent 35%),
+                linear-gradient(135deg, #160d25, #30204d, #18243b);
+            padding: 40px 15px 80px;
+        }
+
+        .timeline-page {
+            width: min(100%, 1050px);
+            margin: auto;
+            position: relative;
+            z-index: 3;
+        }
+
+        .timeline-heading {
+            text-align: center;
+            margin-bottom: 55px;
+        }
+
+        .timeline-heading h1 {
+            font-size: clamp(38px, 7vw, 68px);
+            color: #ffffff;
+            margin-bottom: 12px;
+            text-shadow: 0 0 25px rgba(255, 111, 165, 0.45);
+        }
+
+        .timeline-heading p {
+            color: #ffd7e7;
+            font-size: clamp(16px, 3vw, 22px);
+            line-height: 1.6;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline::before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            transform: translateX(-50%);
+            border-radius: 10px;
+            background: linear-gradient(
+                to bottom,
+                #ff7aad,
+                #c68cff,
+                #71b7ff,
+                #ff7aad
+            );
+            box-shadow: 0 0 20px rgba(255, 122, 173, 0.45);
+        }
+
+        .timeline-item {
+            width: 50%;
+            position: relative;
+            padding: 15px 42px;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: 0.8s ease;
+        }
+
+        .timeline-item.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            text-align: right;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            text-align: left;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            top: 42px;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: #ff669d;
+            border: 4px solid white;
+            box-shadow:
+                0 0 0 6px rgba(255, 102, 157, 0.2),
+                0 0 22px rgba(255, 102, 157, 0.7);
+            z-index: 3;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-dot {
+            right: -11px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-dot {
+            left: -11px;
+        }
+
+        .comic-card {
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(18px);
+            border-radius: 28px;
+            padding: 26px;
+            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            transition: 0.35s ease;
+        }
+
+        .comic-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            background: rgba(255, 255, 255, 0.18);
+        }
+
+        .comic-card::after {
+            content: "";
+            position: absolute;
+            width: 130px;
+            height: 130px;
+            right: -55px;
+            bottom: -55px;
+            border-radius: 50%;
+            background: rgba(255, 106, 160, 0.14);
+        }
+
+        .date {
+            display: inline-block;
+            padding: 8px 15px;
+            border-radius: 50px;
+            background: linear-gradient(135deg, #ff4f88, #bb73ff);
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 14px;
+            letter-spacing: 0.5px;
+        }
+
+        .comic-icon {
+            font-size: 55px;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.25));
+        }
+
+        .comic-card h2 {
+            color: white;
+            font-size: 27px;
+            margin-bottom: 12px;
+        }
+
+        .comic-card p {
+            color: #f6eefe;
+            font-size: 17px;
+            line-height: 1.7;
+        }
+
+        .speech {
+            margin-top: 18px;
+            padding: 14px 18px;
+            border-radius: 18px;
+            color: #37213f;
+            background: #fff5fb;
+            font-style: italic;
+            font-weight: 600;
+            position: relative;
+            text-align: left;
+        }
+
+        .speech::after {
+            content: "";
+            position: absolute;
+            bottom: -12px;
+            left: 24px;
+            border-width: 12px 12px 0;
+            border-style: solid;
+            border-color: #fff5fb transparent transparent;
+        }
+
+        .special-card {
+            border: 1px solid rgba(255, 213, 111, 0.65);
+            box-shadow:
+                0 20px 55px rgba(0, 0, 0, 0.32),
+                0 0 30px rgba(255, 213, 111, 0.13);
+        }
+
+        .ending {
+            margin: 60px auto 0;
+            max-width: 700px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(18px);
+            padding: 35px 25px;
+            border-radius: 30px;
+        }
+
+        .ending h2 {
+            color: white;
+            font-size: clamp(28px, 5vw, 42px);
+            margin-bottom: 12px;
+        }
+
+        .ending p {
+            color: #ffdce9;
+            font-size: 18px;
+            line-height: 1.7;
+        }
+
+        .next-button {
+            margin-top: 30px;
+            padding: 16px 34px;
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            background: linear-gradient(135deg, #ff4e85, #a963ff);
+            box-shadow: 0 12px 30px rgba(255, 78, 133, 0.3);
+            transition: 0.3s ease;
+        }
+
+        .next-button:hover {
+            transform: translateY(-4px) scale(1.04);
+        }
+
+        @media (max-width: 760px) {
+            .timeline::before {
+                left: 18px;
+            }
+
+            .timeline-item,
+            .timeline-item:nth-child(even),
+            .timeline-item:nth-child(odd) {
+                width: 100%;
+                left: 0;
+                padding: 12px 10px 18px 52px;
+                text-align: left;
+            }
+
+            .timeline-item:nth-child(even) .timeline-dot,
+            .timeline-item:nth-child(odd) .timeline-dot {
+                left: 7px;
+                right: auto;
+            }
+
+            .comic-card {
+                padding: 22px;
+            }
+
+            .comic-card h2 {
+                font-size: 23px;
+            }
+
+            .comic-card p {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="particles"></div>
+
+    <main class="timeline-page">
+
+        <header class="timeline-heading">
+            <h1>Our Little Love Story ❤️</h1>
+            <p>
+                Few dates may look ordinary to the world...
+                but they became chapters I will always remember.
+            </p>
+        </header>
+
+        <section class="timeline">
+
+            <article class="timeline-item">
+                <span class="timeline-dot"></span>
+
+                <div class="comic-card">
+                    <div class="date">09 December 2026</div>
+                    <div class="comic-icon">📱🦇</div>
+
+                    <h2>The Request</h2>
+
+                    <p>
+                        One ordinary Snapchat request was sent...
+                        without knowing that it would become the beginning
+                        of something this special.
+                    </p>
+
+                    <div class="speech">
+                        Batman sent a request...
+                    </div>
+                </div>
+            </article>
+
+            <article class="timeline-item">
+                <span class="timeline-dot"></span>
+
+                <div class="comic-card">
+                    <div class="date">20 december 2026</div>
+                    <div class="comic-icon">✅🤍</div>
+
+                    <h2>You Accepted</h2>
+
+                    <p>
+                        Among so many requests, you accepted mine.
+                        That tiny click unknowingly opened the first door
+                        to our story.
+                    </p>
+
+                    <div class="speech">
+                        Request accepted.
+                    </div>
+                </div>
+            </article>
+
+            <article class="timeline-item">
+                <span class="timeline-dot"></span>
+
+                <div class="comic-card">
+                    <div class="date">20 February 2026</div>
+                    <div class="comic-icon">💬🌙</div>
+
+                    <h2>Our Longest Conversation</h2>
+
+                    <p>
+                        Messages became hours.
+                        Hours became memories.
+                        That day, talking to you never felt tiring.
+                    </p>
+
+                    <div class="speech">
+                        One more message... one more hour...
+                    </div>
+                </div>
+            </article>
+
+            <article class="timeline-item">
+                <span class="timeline-dot"></span>
+
+                <div class="comic-card special-card">
+                    <div class="date">27 February 2026</div>
+                    <div class="comic-icon">💍🦇</div>
+
+                    <h2>The Proposal</h2>
+
+                    <p>
+                        The day Batman finally asked the question
+                        that had already been living inside his heart.
+                    </p>
+
+                    <div class="speech">
+                        “Will you marry me?”
+                        <br><br>
+                        “Yes, Mr Batman.” ❤️
+                    </div>
+                </div>
+            </article>
+
+            <article class="timeline-item">
+                <span class="timeline-dot"></span>
+
+                <div class="comic-card">
+                    <div class="date">10 April – 17 May 2026</div>
+                    <div class="comic-icon">🏔️✈️</div>
+
+                    <h2>New Delhi Days</h2>
+
+                    <p>
+                        My work took me far away to New Delhi,
+                        near the Himalayas.
+                        Distance was there...
+                        but somehow the connection stayed.
+                    </p>
+
+                    <div class="speech">
+                        Far away, but not forgotten.
+                    </div>
+                </div>
+            </article>
+
+            <article class="timeline-item">
+                <span class="timeline-dot"></span>
+
+                <div class="comic-card">
+                    <div class="date">06 May 2026</div>
+                    <div class="comic-icon">📲❤️‍🩹</div>
+
+                    <h2>You Tried to Reach Me</h2>
+
+                    <p>
+                        Even during that distance,
+                        you tried to reach me through Instagram.
+                        That effort became one of those memories
+                        I silently treasured.
+                    </p>
+
+                    <div class="speech">
+                        “Batman, where are you?”
+                    </div>
+                </div>
+            </article>
+
+            <article class="timeline-item">
+                <span class="timeline-dot"></span>
+
+                <div class="comic-card">
+                    <div class="date">03 June 2026</div>
+                    <div class="comic-icon">📞🤭</div>
+
+                    <h2>Our First Call</h2>
+
+                    <p>
+                        The first time your name appeared on my call screen.
+                        Messages finally became a voice...
+                        and your voice became another memory.
+                    </p>
+
+                    <div class="speech">
+                        Outgoing call To favourite person...
+                    </div>
+                </div>
+            </article>
+
+            <article class="timeline-item">
+                <span class="timeline-dot"></span>
+
+                <div class="comic-card">
+                    <div class="date">14 June 2026</div>
+                    <div class="comic-icon">⚡😤</div>
+
+                    <h2>Our First Fight</h2>
+
+                    <p>
+                        Not every chapter was soft.
+                        We misunderstood, felt hurt, and argued...
+                        but we still continued talking.
+                    </p>
+
+                    <div class="speech">
+                        Even storms became part of our story.
+                    </div>
+                </div>
+            </article>
+
+            <article class="timeline-item">
+                <span class="timeline-dot"></span>
+
+                <div class="comic-card special-card">
+                    <div class="date">30 June 2026</div>
+                    <div class="comic-icon">🏬🤝❤️</div>
+
+                    <h2>Our First Meeting</h2>
+
+                    <p>
+                        Lulu Mall, Bengaluru.
+                        The first time the person from my screen
+                        stood in front of me for real.
+                    </p>
+
+                    <p>
+                        The first hand hold...
+                        the nervous smile...
+                        the moment that felt heavier than words.
+                    </p>
+
+                    <div class="speech">
+                        “Finally... we met.”
+                    </div>
+                </div>
+            </article>
+
+        </section>
+
+        <section class="ending">
+            <h2>To Be Continued... ❤️</h2>
+
+            <p>
+                These are only a few chapters.
+                Maybe the most beautiful memories are still waiting
+                somewhere ahead.
+            </p>
+
+            <button class="next-button" onclick="nextPage()">
+                Watch Your Memories 🎥
+            </button>
+        </section>
+
+    </main>
+
+    <script>
+        function nextPage() {
+            window.location.href = "gallery.html";
+        }
+
+        const timelineItems = document.querySelectorAll(".timeline-item");
+
+        const observer = new IntersectionObserver(
+            entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("show");
+                    }
+                });
+            },
+            {
+                threshold: 0.16
+            }
+        );
+
+        timelineItems.forEach(item => observer.observe(item));
+
+        const particleContainer = document.getElementById("particles");
+
+        function createHeart() {
+            const heart = document.createElement("div");
+
+            heart.className = "heart";
+            heart.textContent = Math.random() > 0.35 ? "❤️" : "✨";
+
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.fontSize = 14 + Math.random() * 25 + "px";
+            heart.style.animationDuration = 7 + Math.random() * 8 + "s";
+
+            particleContainer.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 16000);
+        }
+
+        setInterval(createHeart, 500);
+    </script>
+
+</body>
+</html>

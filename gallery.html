@@ -1,0 +1,1510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    >
+
+    <title>My Favourite Memories ❤️</title>
+
+    <style>
+        :root {
+            --background: #000000;
+            --surface: #1c1c1e;
+            --surface-light: #2c2c2e;
+            --text: #ffffff;
+            --secondary: #9a9aa1;
+            --accent: #0a84ff;
+            --danger: #ff375f;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            background: var(--background);
+        }
+
+        body {
+            min-height: 100vh;
+            min-height: 100dvh;
+
+            background: var(--background);
+            color: var(--text);
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "SF Pro Display",
+                "Segoe UI",
+                sans-serif;
+
+            overflow-x: hidden;
+            overflow-y: auto;
+
+            -webkit-overflow-scrolling: touch;
+
+            padding-bottom:
+                calc(96px + env(safe-area-inset-bottom));
+        }
+
+        button,
+        input {
+            font: inherit;
+        }
+
+        button {
+            border: 0;
+        }
+
+        /* =========================
+           TOP HEADER
+        ========================== */
+
+        .top-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+
+            padding:
+                max(14px, env(safe-area-inset-top))
+                16px
+                13px;
+
+            background: rgba(0, 0, 0, 0.88);
+
+            border-bottom:
+                1px solid rgba(255, 255, 255, 0.08);
+
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+        }
+
+        .header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .header-title {
+            font-size: clamp(30px, 7vw, 38px);
+            line-height: 1;
+            font-weight: 760;
+            letter-spacing: -1.2px;
+        }
+
+        .select-button {
+            padding: 8px 15px;
+
+            border-radius: 999px;
+
+            background: rgba(255, 255, 255, 0.13);
+            color: var(--accent);
+
+            cursor: pointer;
+        }
+
+        .search-wrap {
+            position: relative;
+            margin-top: 15px;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 13px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            color: var(--secondary);
+            pointer-events: none;
+        }
+
+        .search-input {
+            width: 100%;
+            height: 42px;
+
+            padding: 0 44px;
+
+            border: 0;
+            outline: 0;
+            border-radius: 12px;
+
+            background: var(--surface);
+            color: white;
+
+            font-size: 16px;
+        }
+
+        .search-input::placeholder {
+            color: #7f7f85;
+        }
+
+        /* =========================
+           GALLERY INFO
+        ========================== */
+
+        .gallery-info {
+            width: min(100%, 1100px);
+            margin: auto;
+
+            padding: 20px 16px 12px;
+        }
+
+        .gallery-info h2 {
+            margin-bottom: 5px;
+
+            font-size: clamp(22px, 5vw, 30px);
+            letter-spacing: -0.5px;
+        }
+
+        .gallery-info p {
+            color: var(--secondary);
+            font-size: 15px;
+        }
+
+        /* =========================
+           FILTER BUTTONS
+        ========================== */
+
+        .filters {
+            width: min(100%, 1100px);
+            margin: auto;
+
+            display: flex;
+            gap: 9px;
+
+            overflow-x: auto;
+
+            padding: 0 16px 15px;
+
+            scrollbar-width: none;
+        }
+
+        .filters::-webkit-scrollbar {
+            display: none;
+        }
+
+        .filter-button {
+            flex: 0 0 auto;
+
+            padding: 9px 17px;
+
+            border-radius: 999px;
+
+            background: var(--surface);
+            color: white;
+
+            cursor: pointer;
+            transition:
+                transform 0.2s ease,
+                background 0.2s ease;
+        }
+
+        .filter-button:active {
+            transform: scale(0.96);
+        }
+
+        .filter-button.active {
+            background: white;
+            color: black;
+        }
+
+        /* =========================
+           SELECTION
+        ========================== */
+
+        .selection-status {
+            display: none;
+
+            width: min(100%, 1100px);
+            margin: auto;
+
+            padding: 0 16px 12px;
+
+            color: var(--accent);
+            font-weight: 650;
+        }
+
+        .selection-status.visible {
+            display: block;
+        }
+
+        /* =========================
+           LOADING / ERROR
+        ========================== */
+
+        .state-message {
+            min-height: 42vh;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 13px;
+
+            padding: 50px 20px;
+
+            color: var(--secondary);
+            text-align: center;
+        }
+
+        .loader {
+            width: 34px;
+            height: 34px;
+
+            border:
+                3px solid rgba(255, 255, 255, 0.16);
+
+            border-top-color: white;
+            border-radius: 50%;
+
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .retry-button {
+            margin-top: 8px;
+
+            padding: 11px 18px;
+
+            border-radius: 999px;
+
+            background: var(--accent);
+            color: white;
+
+            cursor: pointer;
+        }
+
+        /* =========================
+           GALLERY GRID
+        ========================== */
+
+        .gallery-grid {
+            width: 100%;
+
+            display: grid;
+            grid-template-columns:
+                repeat(4, minmax(0, 1fr));
+
+            gap: 2px;
+
+            padding: 0 2px;
+        }
+
+        .memory-item {
+            position: relative;
+
+            aspect-ratio: 1 / 1;
+
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #25252b,
+                    #121216
+                );
+
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .memory-image {
+            width: 100%;
+            height: 100%;
+
+            display: block;
+
+            object-fit: cover;
+
+            background: #111;
+        }
+
+        .video-poster {
+            filter: brightness(0.88);
+        }
+
+        .image-fallback {
+            position: absolute;
+            inset: 0;
+
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+
+            padding: 8px;
+
+            background:
+                radial-gradient(
+                    circle at 30% 20%,
+                    rgba(255, 79, 129, 0.35),
+                    transparent 40%
+                ),
+                linear-gradient(
+                    145deg,
+                    #34253e,
+                    #171823
+                );
+        }
+
+        .image-fallback.visible {
+            display: flex;
+        }
+
+        .fallback-icon {
+            width: 44px;
+            height: 44px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 50%;
+
+            background:
+                rgba(255, 255, 255, 0.16);
+
+            font-size: 20px;
+        }
+
+        .fallback-name {
+            width: 90%;
+
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+
+            color:
+                rgba(255, 255, 255, 0.78);
+
+            text-align: center;
+            font-size: 9px;
+        }
+
+        .video-play-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            z-index: 4;
+
+            width: 43px;
+            height: 43px;
+
+            display: grid;
+            place-items: center;
+
+            transform: translate(-50%, -50%);
+
+            padding-left: 3px;
+
+            border:
+                2px solid rgba(255, 255, 255, 0.88);
+
+            border-radius: 50%;
+
+            background:
+                rgba(0, 0, 0, 0.48);
+
+            color: white;
+
+            font-size: 17px;
+
+            pointer-events: none;
+
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        .type-badge {
+            position: absolute;
+            right: 5px;
+            bottom: 5px;
+            z-index: 5;
+
+            padding: 3px 6px;
+
+            border-radius: 7px;
+
+            background:
+                rgba(0, 0, 0, 0.66);
+
+            color: white;
+
+            font-size: 9px;
+            font-weight: 700;
+
+            pointer-events: none;
+        }
+
+        .selection-check {
+            position: absolute;
+            top: 7px;
+            right: 7px;
+            z-index: 8;
+
+            width: 24px;
+            height: 24px;
+
+            display: none;
+            align-items: center;
+            justify-content: center;
+
+            border: 2px solid white;
+            border-radius: 50%;
+
+            background:
+                rgba(0, 0, 0, 0.45);
+
+            color: white;
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        body.selection-mode .selection-check {
+            display: flex;
+        }
+
+        .memory-item.selected .selection-check {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .memory-item.selected::after {
+            content: "";
+
+            position: absolute;
+            inset: 0;
+            z-index: 7;
+
+            border: 4px solid var(--accent);
+
+            background:
+                rgba(10, 132, 255, 0.14);
+
+            pointer-events: none;
+        }
+
+        /* =========================
+           CONTINUE SECTION
+        ========================== */
+
+        .continue-section {
+            padding: 38px 18px 28px;
+            text-align: center;
+        }
+
+        .continue-section p {
+            margin-bottom: 17px;
+
+            color: var(--secondary);
+            line-height: 1.5;
+        }
+
+        .continue-button {
+            width: min(100%, 380px);
+
+            padding: 15px 24px;
+
+            border-radius: 15px;
+
+            background: var(--accent);
+            color: white;
+
+            font-size: 17px;
+            font-weight: 680;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.2s ease,
+                opacity 0.2s ease;
+        }
+
+        .continue-button:active {
+            transform: scale(0.97);
+        }
+
+        /* =========================
+           BOTTOM NAVIGATION
+        ========================== */
+
+        .bottom-navigation {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 150;
+
+            min-height:
+                calc(76px + env(safe-area-inset-bottom));
+
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+
+            padding:
+                9px
+                10px
+                env(safe-area-inset-bottom);
+
+            background:
+                rgba(18, 18, 20, 0.92);
+
+            border-top:
+                1px solid rgba(255, 255, 255, 0.09);
+
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 3px;
+
+            background: transparent;
+            color: #98989f;
+
+            font-size: 10px;
+            cursor: pointer;
+        }
+
+        .nav-item.active {
+            color: var(--accent);
+        }
+
+        .nav-icon {
+            font-size: 22px;
+        }
+
+        /* =========================
+           FULLSCREEN PHOTO VIEWER
+        ========================== */
+
+        .viewer {
+            position: fixed;
+            inset: 0;
+            z-index: 500;
+
+            display: none;
+            align-items: center;
+            justify-content: center;
+
+            background:
+                rgba(0, 0, 0, 0.97);
+        }
+
+        .viewer.open {
+            display: flex;
+        }
+
+        .viewer-image {
+            max-width: 100%;
+            max-height: 100%;
+
+            object-fit: contain;
+
+            touch-action: pinch-zoom;
+        }
+
+        .viewer-close {
+            position: absolute;
+            top:
+                max(18px, env(safe-area-inset-top));
+            right: 18px;
+            z-index: 510;
+
+            width: 43px;
+            height: 43px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 50%;
+
+            background:
+                rgba(255, 255, 255, 0.18);
+
+            color: white;
+
+            font-size: 25px;
+            cursor: pointer;
+        }
+
+        .viewer-title {
+            position: absolute;
+            left: 16px;
+            right: 70px;
+
+            top:
+                max(24px, env(safe-area-inset-top));
+
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+
+            color: white;
+            font-size: 14px;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================== */
+
+        @media (min-width: 600px) {
+            .gallery-grid {
+                grid-template-columns:
+                    repeat(6, minmax(0, 1fr));
+
+                max-width: 1100px;
+                margin: auto;
+            }
+        }
+
+        @media (min-width: 1000px) {
+            .gallery-grid {
+                grid-template-columns:
+                    repeat(8, minmax(0, 1fr));
+            }
+
+            .top-header {
+                padding-left:
+                    max(
+                        24px,
+                        calc((100vw - 1100px) / 2)
+                    );
+
+                padding-right:
+                    max(
+                        24px,
+                        calc((100vw - 1100px) / 2)
+                    );
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="top-header">
+
+        <div class="header-row">
+
+            <h1 class="header-title">
+                Photos
+            </h1>
+
+            <button
+                class="select-button"
+                id="selectButton"
+                type="button"
+            >
+                Select
+            </button>
+
+        </div>
+
+        <div class="search-wrap">
+
+            <span class="search-icon">
+                ⌕
+            </span>
+
+            <input
+                class="search-input"
+                id="searchInput"
+                type="search"
+                placeholder="Search photos and videos"
+                autocomplete="off"
+            >
+
+        </div>
+
+    </header>
+
+    <main>
+
+        <section class="gallery-info">
+
+            <h2>
+                My Favourite Memories ❤️
+            </h2>
+
+            <p id="memoryCount">
+                Loading memories...
+            </p>
+
+        </section>
+
+        <section class="filters">
+
+            <button
+                class="filter-button active"
+                data-filter="all"
+                type="button"
+            >
+                All
+            </button>
+
+            <button
+                class="filter-button"
+                data-filter="image"
+                type="button"
+            >
+                Photos
+            </button>
+
+            <button
+                class="filter-button"
+                data-filter="video"
+                type="button"
+            >
+                Videos
+            </button>
+
+        </section>
+
+        <div
+            class="selection-status"
+            id="selectionStatus"
+        >
+            0 selected
+        </div>
+
+        <section
+            class="state-message"
+            id="loadingState"
+        >
+            <div class="loader"></div>
+
+            <p>
+                Loading your memories...
+            </p>
+        </section>
+
+        <section
+            class="gallery-grid"
+            id="galleryGrid"
+            hidden
+        ></section>
+
+        <section
+            class="state-message"
+            id="emptyState"
+            hidden
+        >
+            <div style="font-size: 45px;">
+                🖼️
+            </div>
+
+            <p>
+                No matching memories found.
+            </p>
+        </section>
+
+        <section class="continue-section">
+
+            <p>
+                Every little memory carries
+                a piece of you.
+            </p>
+
+            <button
+                class="continue-button"
+                type="button"
+                onclick="window.location.href='message.html'"
+            >
+                Continue to My Letter 💌
+            </button>
+
+        </section>
+
+    </main>
+
+    <nav class="bottom-navigation">
+
+        <button
+            class="nav-item active"
+            type="button"
+        >
+            <span class="nav-icon">▦</span>
+            <span>Library</span>
+        </button>
+
+        <button
+            class="nav-item"
+            type="button"
+            id="forYouButton"
+        >
+            <span class="nav-icon">◷</span>
+            <span>For You</span>
+        </button>
+
+        <button
+            class="nav-item"
+            type="button"
+        >
+            <span class="nav-icon">♧</span>
+            <span>Albums</span>
+        </button>
+
+        <button
+            class="nav-item"
+            type="button"
+            id="searchNavButton"
+        >
+            <span class="nav-icon">⌕</span>
+            <span>Search</span>
+        </button>
+
+    </nav>
+
+    <div
+        class="viewer"
+        id="viewer"
+        aria-hidden="true"
+    >
+
+        <div
+            class="viewer-title"
+            id="viewerTitle"
+        ></div>
+
+        <button
+            class="viewer-close"
+            id="viewerClose"
+            type="button"
+            aria-label="Close image"
+        >
+            ×
+        </button>
+
+        <img
+            class="viewer-image"
+            id="viewerImage"
+            alt="Selected memory"
+        >
+
+    </div>
+
+    <script>
+        "use strict";
+
+        const galleryGrid =
+            document.getElementById("galleryGrid");
+
+        const loadingState =
+            document.getElementById("loadingState");
+
+        const emptyState =
+            document.getElementById("emptyState");
+
+        const memoryCount =
+            document.getElementById("memoryCount");
+
+        const searchInput =
+            document.getElementById("searchInput");
+
+        const selectButton =
+            document.getElementById("selectButton");
+
+        const selectionStatus =
+            document.getElementById("selectionStatus");
+
+        const filterButtons =
+            document.querySelectorAll(".filter-button");
+
+        const viewer =
+            document.getElementById("viewer");
+
+        const viewerImage =
+            document.getElementById("viewerImage");
+
+        const viewerTitle =
+            document.getElementById("viewerTitle");
+
+        const viewerClose =
+            document.getElementById("viewerClose");
+
+        const forYouButton =
+            document.getElementById("forYouButton");
+
+        const searchNavButton =
+            document.getElementById("searchNavButton");
+
+        let allMedia = [];
+        let activeFilter = "all";
+        let selectionMode = false;
+
+        const selectedItems = new Set();
+
+        function encodePath(path) {
+            if (!path) {
+                return "";
+            }
+
+            return String(path)
+                .split("/")
+                .map(part => encodeURIComponent(part))
+                .join("/");
+        }
+
+        function escapeHtml(value) {
+            return String(value)
+                .replaceAll("&", "&amp;")
+                .replaceAll("<", "&lt;")
+                .replaceAll(">", "&gt;")
+                .replaceAll('"', "&quot;")
+                .replaceAll("'", "&#039;");
+        }
+
+        function normaliseMediaItem(item) {
+            if (
+                !item ||
+                typeof item.name !== "string" ||
+                !["image", "video"].includes(item.type)
+            ) {
+                return null;
+            }
+
+            const normalised = {
+                name: item.name,
+                type: item.type,
+                source: item.source || "",
+                thumbnail: item.thumbnail || ""
+            };
+
+            if (!normalised.source) {
+                normalised.source =
+                    `videos/${item.name}`;
+            }
+
+            if (
+                normalised.type === "image" &&
+                !normalised.thumbnail
+            ) {
+                normalised.thumbnail =
+                    normalised.source;
+            }
+
+            return normalised;
+        }
+
+        async function loadMedia() {
+            showLoading();
+
+            try {
+                const response =
+                    await fetch("./gallery-data.json", {
+                        cache: "no-store"
+                    });
+
+                if (!response.ok) {
+                    throw new Error(
+                        `gallery-data.json returned ${response.status}`
+                    );
+                }
+
+                const data =
+                    await response.json();
+
+                const rawItems =
+                    Array.isArray(data)
+                        ? data
+                        : [data];
+
+                allMedia = rawItems
+                    .map(normaliseMediaItem)
+                    .filter(Boolean);
+
+                if (allMedia.length === 0) {
+                    throw new Error(
+                        "gallery-data.json contains no valid media."
+                    );
+                }
+
+                hideLoading();
+                updateCounter();
+                applyFilters();
+            } catch (error) {
+                console.error(
+                    "Gallery loading error:",
+                    error
+                );
+
+                showLoadError(error.message);
+            }
+        }
+
+        function showLoading() {
+            loadingState.hidden = false;
+            galleryGrid.hidden = true;
+            emptyState.hidden = true;
+        }
+
+        function hideLoading() {
+            loadingState.hidden = true;
+        }
+
+        function showLoadError(message) {
+            loadingState.hidden = false;
+
+            loadingState.innerHTML = `
+                <div style="font-size:45px">
+                    ⚠️
+                </div>
+
+                <p>
+                    Could not load your memories.
+                </p>
+
+                <small>
+                    ${escapeHtml(message)}
+                </small>
+
+                <button
+                    class="retry-button"
+                    id="retryButton"
+                    type="button"
+                >
+                    Try Again
+                </button>
+            `;
+
+            memoryCount.textContent =
+                "Media unavailable";
+
+            document
+                .getElementById("retryButton")
+                .addEventListener(
+                    "click",
+                    loadMedia
+                );
+        }
+
+        function updateCounter() {
+            const photoCount =
+                allMedia.filter(
+                    item => item.type === "image"
+                ).length;
+
+            const videoCount =
+                allMedia.filter(
+                    item => item.type === "video"
+                ).length;
+
+            memoryCount.textContent =
+                `${photoCount} photos, ${videoCount} videos`;
+        }
+
+        function applyFilters() {
+            const query =
+                searchInput.value
+                    .trim()
+                    .toLowerCase();
+
+            const filtered =
+                allMedia.filter(item => {
+                    const typeMatches =
+                        activeFilter === "all" ||
+                        item.type === activeFilter;
+
+                    const searchMatches =
+                        item.name
+                            .toLowerCase()
+                            .includes(query);
+
+                    return (
+                        typeMatches &&
+                        searchMatches
+                    );
+                });
+
+            renderGallery(filtered);
+        }
+
+        function renderGallery(items) {
+            galleryGrid.innerHTML = "";
+
+            if (items.length === 0) {
+                galleryGrid.hidden = true;
+                emptyState.hidden = false;
+                return;
+            }
+
+            emptyState.hidden = true;
+            galleryGrid.hidden = false;
+
+            const fragment =
+                document.createDocumentFragment();
+
+            items.forEach(item => {
+                const card =
+                    document.createElement("article");
+
+                card.className = "memory-item";
+                card.dataset.filename = item.name;
+
+                if (selectedItems.has(item.name)) {
+                    card.classList.add("selected");
+                }
+
+                const safeName =
+                    escapeHtml(item.name);
+
+                if (item.type === "image") {
+                    const imagePath =
+                        encodePath(
+                            item.thumbnail ||
+                            item.source
+                        );
+
+                    card.innerHTML = `
+                        <img
+                            class="memory-image"
+                            src="${imagePath}"
+                            alt="${safeName}"
+                            loading="lazy"
+                            decoding="async"
+                        >
+
+                        <div class="image-fallback">
+                            <div class="fallback-icon">
+                                🖼️
+                            </div>
+
+                            <div class="fallback-name">
+                                ${safeName}
+                            </div>
+                        </div>
+
+                        <div class="type-badge">
+                            PHOTO
+                        </div>
+
+                        <div class="selection-check">
+                            ✓
+                        </div>
+                    `;
+
+                    const image =
+                        card.querySelector(
+                            ".memory-image"
+                        );
+
+                    const fallback =
+                        card.querySelector(
+                            ".image-fallback"
+                        );
+
+                    image.addEventListener(
+                        "error",
+                        () => {
+                            image.style.display =
+                                "none";
+
+                            fallback.classList.add(
+                                "visible"
+                            );
+                        }
+                    );
+                } else {
+                    const thumbnailPath =
+                        encodePath(
+                            item.thumbnail
+                        );
+
+                    card.innerHTML = `
+                        <img
+                            class="memory-image video-poster"
+                            src="${thumbnailPath}"
+                            alt="${safeName}"
+                            loading="lazy"
+                            decoding="async"
+                        >
+
+                        <div class="image-fallback">
+                            <div class="fallback-icon">
+                                🎥
+                            </div>
+
+                            <div class="fallback-name">
+                                ${safeName}
+                            </div>
+                        </div>
+
+                        <div class="video-play-icon">
+                            ▶
+                        </div>
+
+                        <div class="type-badge">
+                            VIDEO
+                        </div>
+
+                        <div class="selection-check">
+                            ✓
+                        </div>
+                    `;
+
+                    const poster =
+                        card.querySelector(
+                            ".video-poster"
+                        );
+
+                    const fallback =
+                        card.querySelector(
+                            ".image-fallback"
+                        );
+
+                    if (!item.thumbnail) {
+                        poster.style.display =
+                            "none";
+
+                        fallback.classList.add(
+                            "visible"
+                        );
+                    } else {
+                        poster.addEventListener(
+                            "error",
+                            () => {
+                                console.error(
+                                    "Thumbnail missing:",
+                                    item.thumbnail
+                                );
+
+                                poster.style.display =
+                                    "none";
+
+                                fallback.classList.add(
+                                    "visible"
+                                );
+                            }
+                        );
+                    }
+                }
+
+                card.addEventListener(
+                    "click",
+                    () => {
+                        if (selectionMode) {
+                            toggleSelection(
+                                card,
+                                item.name
+                            );
+
+                            return;
+                        }
+
+                        if (item.type === "image") {
+                            openImage(item);
+                        }
+                    }
+                );
+
+                fragment.appendChild(card);
+            });
+
+            galleryGrid.appendChild(fragment);
+        }
+
+        function toggleSelection(card, filename) {
+            if (selectedItems.has(filename)) {
+                selectedItems.delete(filename);
+                card.classList.remove("selected");
+            } else {
+                selectedItems.add(filename);
+                card.classList.add("selected");
+            }
+
+            updateSelectionStatus();
+        }
+
+        function updateSelectionStatus() {
+            selectionStatus.textContent =
+                `${selectedItems.size} selected`;
+
+            selectionStatus.classList.toggle(
+                "visible",
+                selectionMode
+            );
+        }
+
+        function clearSelection() {
+            selectedItems.clear();
+
+            document
+                .querySelectorAll(
+                    ".memory-item.selected"
+                )
+                .forEach(card =>
+                    card.classList.remove(
+                        "selected"
+                    )
+                );
+        }
+
+        selectButton.addEventListener(
+            "click",
+            () => {
+                selectionMode =
+                    !selectionMode;
+
+                document.body.classList.toggle(
+                    "selection-mode",
+                    selectionMode
+                );
+
+                selectButton.textContent =
+                    selectionMode
+                        ? "Cancel"
+                        : "Select";
+
+                if (!selectionMode) {
+                    clearSelection();
+                }
+
+                updateSelectionStatus();
+            }
+        );
+
+        filterButtons.forEach(button => {
+            button.addEventListener(
+                "click",
+                () => {
+                    filterButtons.forEach(
+                        filterButton =>
+                            filterButton.classList
+                                .remove("active")
+                    );
+
+                    button.classList.add(
+                        "active"
+                    );
+
+                    activeFilter =
+                        button.dataset.filter;
+
+                    applyFilters();
+                }
+            );
+        });
+
+        searchInput.addEventListener(
+            "input",
+            applyFilters
+        );
+
+        function openImage(item) {
+            const sourcePath =
+                item.source ||
+                item.thumbnail;
+
+            viewerImage.src =
+                encodePath(sourcePath);
+
+            viewerTitle.textContent =
+                item.name;
+
+            viewer.classList.add("open");
+
+            viewer.setAttribute(
+                "aria-hidden",
+                "false"
+            );
+
+            document.body.style.overflow =
+                "hidden";
+        }
+
+        function closeViewer() {
+            viewer.classList.remove("open");
+
+            viewer.setAttribute(
+                "aria-hidden",
+                "true"
+            );
+
+            viewerImage.removeAttribute("src");
+
+            viewerTitle.textContent = "";
+
+            document.body.style.overflow = "";
+        }
+
+        viewerClose.addEventListener(
+            "click",
+            closeViewer
+        );
+
+        viewer.addEventListener(
+            "click",
+            event => {
+                if (event.target === viewer) {
+                    closeViewer();
+                }
+            }
+        );
+
+        document.addEventListener(
+            "keydown",
+            event => {
+                if (
+                    event.key === "Escape" &&
+                    viewer.classList.contains("open")
+                ) {
+                    closeViewer();
+                }
+            }
+        );
+
+        forYouButton.addEventListener(
+            "click",
+            () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+            }
+        );
+
+        searchNavButton.addEventListener(
+            "click",
+            () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+
+                setTimeout(
+                    () => searchInput.focus(),
+                    350
+                );
+            }
+        );
+
+        loadMedia();
+    </script>
+
+</body>
+</html>

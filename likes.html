@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Things I Like About You ❤️</title>
+
+<link rel="stylesheet" href="style.css">
+
+
+<style>
+
+body{
+
+background:
+linear-gradient(135deg,#ff758c,#ff7eb3,#667eea);
+
+overflow-y:auto;
+
+}
+
+
+.likes-box{
+
+max-width:1000px;
+
+margin:40px auto;
+
+padding:40px;
+
+text-align:center;
+
+}
+
+
+
+.title{
+
+font-size:50px;
+
+color:white;
+
+margin-bottom:15px;
+
+}
+
+
+
+.subtitle{
+
+font-size:22px;
+
+color:#ffeef5;
+
+margin-bottom:40px;
+
+}
+
+
+
+.cards{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+gap:25px;
+
+}
+
+
+
+.card{
+
+background:rgba(255,255,255,.15);
+
+backdrop-filter:blur(15px);
+
+border-radius:25px;
+
+padding:35px 20px;
+
+box-shadow:0 15px 30px rgba(0,0,0,.25);
+
+transition:.5s;
+
+cursor:pointer;
+
+animation:appear 1s ease;
+
+}
+
+
+
+.card:hover{
+
+transform:translateY(-15px) scale(1.05);
+
+background:rgba(255,255,255,.3);
+
+}
+
+
+
+.emoji{
+
+font-size:50px;
+
+margin-bottom:20px;
+
+}
+
+
+
+.card h2{
+
+font-size:25px;
+
+color:white;
+
+}
+
+
+
+.card p{
+
+margin-top:15px;
+
+color:#ffeef5;
+
+font-size:17px;
+
+line-height:1.5;
+
+}
+
+
+
+.final{
+
+margin-top:50px;
+
+font-size:25px;
+
+color:white;
+
+}
+
+
+
+@keyframes appear{
+
+from{
+
+opacity:0;
+
+transform:translateY(40px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}
+
+
+
+</style>
+
+
+</head>
+
+
+
+<body>
+
+
+<div id="particles"></div>
+
+
+<div class="container">
+
+
+<div class="likes-box">
+
+
+<h1 class="title">
+
+Things I Like About You ❤️
+
+</h1>
+
+
+<p class="subtitle">
+
+Not just your beauty...
+
+but the little things that make you YOU 🥹
+
+</p>
+
+
+
+
+<div class="cards">
+
+
+<div class="card">
+
+<div class="emoji">
+
+😊
+
+</div>
+
+<h2>Your Smile</h2>
+
+<p>
+
+That one smile can change my entire mood maa.
+
+Even when my day is bad,
+seeing you smile makes everything better ❤️
+
+</p>
+
+</div>
+
+
+
+
+<div class="card">
+
+<div class="emoji">
+
+🔥
+
+</div>
+
+<h2>Your Confidence</h2>
+
+<p>
+
+The way you stand for yourself,
+your opinions,
+your courage...
+
+that's something I admire about you.
+
+</p>
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<div class="emoji">
+
+😂
+
+</div>
+
+<h2>Your Craziness</h2>
+
+<p>
+
+Your random talks,
+your funny reactions,
+your lusu moments...
+
+I love every bit of it 🤭❤️
+
+</p>
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<div class="emoji">
+
+🤍
+
+</div>
+
+<h2>Your Kindness</h2>
+
+<p>
+
+The way you care about people
+shows how beautiful your heart is.
+
+</p>
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<div class="emoji">
+
+✨
+
+</div>
+
+<h2>Your Honesty</h2>
+
+<p>
+
+You always say what you feel.
+
+Even difficult truths...
+
+and I respect that.
+
+</p>
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<div class="emoji">
+
+🤭
+
+</div>
+
+<h2>Your "Aieee Baba" Moments</h2>
+
+<p>
+
+That reaction of yours...
+
+I don't know why,
+but it always makes me smile 😂❤️
+
+</p>
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<div class="emoji">
+
+🙂
+
+</div>
+
+<h2>Your "Maybe"</h2>
+
+<p>
+
+The most dangerous word you use...
+
+because it keeps this Batman confused 🤣❤️
+
+</p>
+
+</div>
+
+
+
+</div>
+
+
+
+<h2 class="final">
+
+Thank you for being my favourite person ❤️
+
+</h2>
+
+
+
+<button onclick="nextPage()">
+
+See Our Memories 📸
+
+</button>
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<script>
+
+
+function nextPage(){
+
+window.location.href="gallery.html";
+
+}
+
+
+
+// Floating hearts
+
+const particles=document.getElementById("particles");
+
+
+function createHeart(){
+
+
+let heart=document.createElement("div");
+
+
+heart.className="heart";
+
+heart.innerHTML="❤️";
+
+
+heart.style.left=Math.random()*100+"vw";
+
+
+heart.style.fontSize=
+(15+Math.random()*35)+"px";
+
+
+heart.style.animationDuration=
+(5+Math.random()*7)+"s";
+
+
+particles.appendChild(heart);
+
+
+
+setTimeout(()=>{
+
+heart.remove();
+
+},12000);
+
+
+}
+
+
+setInterval(createHeart,300);
+
+
+
+</script>
+
+
+</body>
+
+</html>

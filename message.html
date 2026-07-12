@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>For My Pondatii ❤️</title>
+
+<link rel="stylesheet" href="style.css">
+
+
+<style>
+
+body{
+
+background:
+linear-gradient(135deg,#1f1c2c,#928dab);
+
+overflow-y:auto;
+
+}
+
+
+.message-box{
+
+max-width:850px;
+
+margin:40px auto;
+
+padding:45px;
+
+background:rgba(255,255,255,0.12);
+
+backdrop-filter:blur(20px);
+
+border-radius:35px;
+
+box-shadow:0 20px 50px rgba(0,0,0,.4);
+
+animation:show 2s ease;
+
+}
+
+
+h1{
+
+font-size:50px;
+
+color:#ffb6c1;
+
+margin-bottom:30px;
+
+}
+
+
+.letter{
+
+font-size:21px;
+
+line-height:1.9;
+
+color:white;
+
+text-align:left;
+
+white-space:pre-line;
+
+}
+
+
+.signature{
+
+margin-top:40px;
+
+font-size:30px;
+
+color:#ffd1dc;
+
+text-align:right;
+
+}
+
+
+
+.next{
+
+margin-top:40px;
+
+}
+
+
+
+@keyframes show{
+
+from{
+
+opacity:0;
+
+transform:translateY(50px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}
+
+
+
+</style>
+
+
+</head>
+
+
+
+<body>
+
+
+<div id="particles"></div>
+
+
+<div class="container">
+
+
+<div class="message-box">
+
+
+<h1>
+
+To My Pondatii ❤️
+
+</h1>
+
+
+<div class="letter" id="text"></div>
+
+
+<div class="signature">
+
+    Mr Rindish 
+- Your Batman ❤️
+
+</div>
+
+
+
+<button class="next" onclick="nextPage()">
+
+Continue 💕
+
+</button>
+
+
+</div>
+
+
+</div>
+
+
+
+
+<script>
+
+
+const message = `
+
+Chellam… ❤️
+
+
+First of all...
+
+I want you to know one thing.
+
+You are not a burden to me.
+
+Your fears, your insecurities, your past,
+everything that made you who you are today...
+
+I don't want to change those things.
+
+I want to understand them.
+
+
+Nee life la neraya vishayam thaniya handle panniruka maa...
+
+Maybe many people didn't see your struggles,
+but I want you to know...
+
+I see you.
+
+I am proud of you. 🥹❤️
+
+
+Un smile paatha enakku happiness varudhu.
+
+Un voice ketta enakku peace varudhu.
+
+Un "Aieee Baba" moments,
+un craziness,
+un attitude,
+ellame enakku special dhaan. 🤭❤️
+
+
+Sometimes namma rendu perukum different opinions varalam.
+
+Sometimes sanda kooda varalam.
+
+But chellam...
+
+Enakku fight illaadha relationship venum nu illa.
+
+Fight vandhaalum,
+oruvarai oruvar lose pannama irukkura relationship venum.
+
+
+Morning la start aana sanda...
+
+Night ku mudiyumbodhu,
+
+"Seri maa, namma rendu perum hurt pannitom...
+but still we choose each other"
+
+nu sollura relationship venum.
+
+
+Nee strong ponnu.
+
+Aana strong people kum konjam care thevai.
+
+And if one day nee tired aana...
+
+Un pakkathula irukka oruthan ah irukkanum nu aasai.
+
+Not because you cannot handle life...
+
+Because you don't have to handle everything alone anymore.
+
+
+I cannot promise that life will always be perfect.
+
+But I can promise...
+
+I will always try to understand you.
+
+I will always respect you.
+
+I will always choose you.
+
+
+July 14 un birthday mattum illa maa...
+
+Enakku romba precious ah irukkura oru person celebrate aagura day. ❤️
+
+
+Thank you for coming into my life.
+
+Thank you for making this lusu paiyan smile.
+
+
+Love you Pondatii ❤️🫶🏻
+
+`;
+
+
+
+let index=0;
+
+
+function typing(){
+
+
+if(index < message.length){
+
+
+document.getElementById("text").innerHTML += message.charAt(index);
+
+index++;
+
+setTimeout(typing,25);
+
+
+}
+
+
+}
+
+
+typing();
+
+
+
+
+
+// Next page
+
+function nextPage(){
+
+window.location.href="likes.html";
+
+}
+
+
+
+// Floating hearts
+
+const particles=document.getElementById("particles");
+
+
+function createHeart(){
+
+
+let heart=document.createElement("div");
+
+heart.className="heart";
+
+heart.innerHTML="❤️";
+
+
+heart.style.left=Math.random()*100+"vw";
+
+
+heart.style.animationDuration=
+(5+Math.random()*6)+"s";
+
+
+heart.style.fontSize=
+(15+Math.random()*30)+"px";
+
+
+particles.appendChild(heart);
+
+
+setTimeout(()=>{
+
+heart.remove();
+
+},10000);
+
+
+}
+
+
+setInterval(createHeart,300);
+
+
+
+</script>
+
+
+</body>
+
+</html>
